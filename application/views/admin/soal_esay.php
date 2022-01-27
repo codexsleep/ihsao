@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Daftar Soal Objektif | Ihsao</title>
+        <title>Soal Esay | Administrator Ihsao</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -19,6 +20,11 @@
         <link href="<?= base_url();?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url();?>assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
         <link href="<?= base_url();?>assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
+        <!-- Quill css -->
+        <link href="<?= base_url();?>assets/css/vendor/quill.core.css" rel="stylesheet" type="text/css" />
+        <link href="<?= base_url();?>assets/css/vendor/quill.snow.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="<?= base_url();?>assets/plugin/ckeditor/ckeditor.js"></script>
 
     </head>
 
@@ -44,11 +50,11 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ihsao</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Quiz</a></li>
-                                            <li class="breadcrumb-item active">Soal</li>
+                                            <li class="breadcrumb-item"><a href="<?= base_url();?>admin/quiz">Quiz</a></li>
+                                            <li class="breadcrumb-item active">Soal Esay</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Daftar Soal Objektif</h4>
+                                    <h4 class="page-title">Soal Esay</h4>
                                 </div>
                             </div>
                         </div>
@@ -62,38 +68,35 @@
                         <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <strong>Success - </strong> <?= $_COOKIE['sucmesg'];?>
-                        </div>
-                        <?php }?>
-                         <a href="<?= base_url();?>admin/quiz/tambah_soal_objektif/<?= $quizid;?>"><button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Tambah Soal</button></a>
+                        </div>    
+                         <?php } ?>
                         <div class="row">
                         	 <div class="col-12">
-                                <div class="card">
+                                 <div class="card">
                                     <div class="card-body">
-                                    	<table id="basic-datatable" class="table dt-responsive nowrap w-100">
-    										<thead>
-                                                <tr>
-                                                	<th>ID</th>
-                                                	<th>Soal</th>
-                                                    <th>Action</th>
-        										</tr>
-    										</thead>
-    										<tbody>
-                                                <?php
-                                                    foreach ($soal as $soal) {
-                                                ?>
-        										<tr>
-                                    	            <td><?= $soal['soal_id'];?></td>
-                                     	           	<td><a href="<?= base_url();?>admin/quiz/lihat_soal_objektif/<?= $soal['soal_id'];?>" target="_blank"><button type="button" class="btn btn-success"><i class="mdi mdi-eye"></i> Lihat Soal</button></a></td>
-                                                        <td>
-                                                        <a href="<?= base_url();?>admin/quiz/edit_soal_objektif/<?= $soal['quiz_id'];?>/<?= $soal['soal_id'];?>"><button type="button" class="btn btn-warning"><i class="mdi mdi-pencil"></i> </button></a>
-                                                        <a href="<?= base_url();?>admin/quiz/delete_soal_objektif/<?= $quizid;?>/<?= $soal['soal_id'];?>"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></td>
-                                            	</tr>
-                                            <?php } ?>
-    										</tbody>
-										</table>
-                                    </div>
-                                </div>
-                            </div>
+                                        <div class="tab-content">
+                                           <form class="needs-validation" method="POST" action="<?= base_url();?>admin/quiz/proses_esay/<?= $id;?>" novalidate>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Tautan Soal Esay</label>
+                                                        <?php
+                                                            if($soal==null){
+                                                        ?>
+                                                        <input type="url" class="form-control" name="soal" value="" required>
+                                                        <?php
+                                                            }else{
+                                                        ?>
+                                                        <input type="url" class="form-control" name="soal" value="<?= $soal['soal_pdf'];?>" required>
+                                                        <?php
+                                                            }
+                                                        ?>
+                                                    </div>
+                                                <button class="btn btn-primary" name="simpan" type="submit">Simpan</button>
+                                            </form>
+                                        </div> <!-- end tab-content-->
+
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col-->
                         </div>
 
                     </div> <!-- container -->
@@ -113,7 +116,18 @@
 
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
-
+        <script>
+        var quill = new Quill('#quill_editor', {
+                theme: 'snow'
+        });
+   quill.on('text-change', function(delta, oldDelta, source) {
+        document.getElementById("quill_html").value = quill.root.innerHTML;
+    });
+        </script>
+        <!-- quill js -->
+        <script src="<?= base_url();?>assets/js/vendor/quill.min.js"></script>
+        <!-- quill Init js-->
+        <script src="<?= base_url();?>assets/js/pages/demo.quilljs.js"></script>
         <!-- bundle -->
         <script src="<?= base_url();?>assets/js/vendor.min.js"></script>
         <script src="<?= base_url();?>assets/js/app.min.js"></script>

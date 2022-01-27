@@ -93,6 +93,43 @@ class Quiz extends CI_Controller{
         $this->load->helper('text');
     }
 
+    function soal_esay($id){
+		$data['userdata'] = $this->auth_model->admin_data($this->session->userdata('username'))->row_array();
+		$data['soal'] = $this->quiz_model->cekesay_byid($id)->row_array();
+		//$data['quiz'] = $this->quiz_model->soal_esay($id)->row_array();
+		$data['id'] = $id;
+        $this->load->view('admin/soal_esay',$data);
+        $this->load->helper('text');
+    }
+
+    function proses_esay($id){
+    	$cekesay = $this->quiz_model->cekesay_byid($id)->row_array();
+    	$soal = str_replace("'", "", htmlspecialchars($this->input->post('soal',TRUE),ENT_QUOTES));
+    	if($cekesay==null){
+    		$result = $this->quiz_model->tambah_esay($id,$soal);
+    	}else{
+    		$result = $this->quiz_model->update_esay($id,$soal);
+    	}
+
+    	if($result){
+		//jika proses berhasil
+			setcookie("sucmesg", "Soal Berhasil di simpan", time() + (3), "/");
+		}else{
+			//jika proses gagal
+			setcookie("errmesg", "Soal Gagal di simpan", time() + (3), "/");
+		}
+		redirect("admin/quiz/soal_esay/".$id); //dialihkan ke halaman soal esay
+    }
+
+    function edit_soal_objektif($quiz,$soal){
+		$data['userdata'] = $this->auth_model->admin_data($this->session->userdata('username'))->row_array();
+		$data['soal'] = $soal;
+		$data['quiz'] = $quiz;
+		$data['datasoal'] = $this->quiz_model->dataedit_soalobjektif($soal)->row_array();
+        $this->load->view('admin/edit_soal_objektif',$data);
+        $this->load->helper('text');
+    }
+
    	function soal_objektif($id){
 		$data['userdata'] = $this->auth_model->admin_data($this->session->userdata('username'))->row_array();
 		$data['soal'] = $this->quiz_model->datasoal_objektif($id)->result_array();
@@ -116,6 +153,29 @@ class Quiz extends CI_Controller{
         $this->load->helper('text');
     }
 
+    function proses_edit_soal_objektif($quiz,$soal){
+  		$pertanyaan = str_replace("'", "", htmlspecialchars($this->input->post('pertanyaan',TRUE),ENT_QUOTES));
+    	$opsia = str_replace("'", "", htmlspecialchars($this->input->post('opsia',TRUE),ENT_QUOTES));
+    	$opsib = str_replace("'", "", htmlspecialchars($this->input->post('opsib',TRUE),ENT_QUOTES));
+    	$opsic = str_replace("'", "", htmlspecialchars($this->input->post('opsic',TRUE),ENT_QUOTES));
+    	$opsid = str_replace("'", "", htmlspecialchars($this->input->post('opsid',TRUE),ENT_QUOTES));
+    	$opsie = str_replace("'", "", htmlspecialchars($this->input->post('opsie',TRUE),ENT_QUOTES));
+    	$jawaban = str_replace("'", "", htmlspecialchars($this->input->post('jawaban',TRUE),ENT_QUOTES));
+    	if($pertanyaan!=null && $opsia!=null && $opsib!=null && $opsic!=null && $opsid!=null && $opsie!=null && $jawaban!=null){
+    		$result = $this->quiz_model->edit_soal_objektif($soal,$pertanyaan,$opsia,$opsib,$opsic,$opsid,$opsie,$jawaban);
+    		if($result){
+					//jika proses tambah berhasil
+					setcookie("sucmesg", "Soal Berhasil di edit", time() + (3), "/");
+				}else{
+					//jika proses tambah gagal
+					setcookie("errmesg", "Soal Gagal di edit", time() + (3), "/");
+				}
+
+    	}else{
+    		setcookie("errmesg", "Data tidak boleh kosong", time() + (3), "/");
+    	}
+    	redirect("admin/quiz/soal_objektif/".$quiz); //dialihkan ke halaman tambah quiz
+    }
 
     function proses_tambah_soal_objektif($id){
     	$pertanyaan = str_replace("'", "", htmlspecialchars($this->input->post('pertanyaan',TRUE),ENT_QUOTES));
@@ -132,7 +192,7 @@ class Quiz extends CI_Controller{
 					setcookie("sucmesg", "Soal Berhasil di tambah", time() + (3), "/");
 				}else{
 					//jika proses tambah gagal
-					setcookie("errmesg", "Soal Gagal di edit", time() + (3), "/");
+					setcookie("errmesg", "Soal Gagal di tambah", time() + (3), "/");
 				}
 
     	}else{

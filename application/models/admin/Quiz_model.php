@@ -19,9 +19,15 @@ class Quiz_model extends CI_Model
         return $query;
     }
 
+    public function dataedit_soalobjektif($id)
+    {
+        $query=$this->db->query("SELECT * FROM tbl_soal_objektif WHERE soal_id='$id' LIMIT 1");
+        return $query;
+    }
+
     public function jumlah_soal_objektif($id)
     {
-        $query=$this->db->query("SELECT * FROM tbl_soal_objektif WHERE quiz_id='$id' LIMIT 1");
+        $query=$this->db->query("SELECT count(*) as total FROM tbl_soal_objektif WHERE quiz_id='$id' LIMIT 1");
         return $query;
     }
 
@@ -35,9 +41,20 @@ class Quiz_model extends CI_Model
         return $result;
     }
 
+    public function edit_soal_objektif($soal,$pertanyaan,$opsia,$opsib,$opsic,$opsid,$opsie,$jawaban){
+        $result = $this->db->query("UPDATE tbl_soal_objektif SET quiz_question='$pertanyaan',quiz_option_a='$opsia',quiz_option_b='$opsib',quiz_option_c='$opsic',quiz_option_d='$opsid',quiz_option_e='$opsie',quiz_answare='$jawaban' WHERE soal_id='$soal'");
+        return $result;
+    }
+
     public function objektifbyid($id)
     {
         $query=$this->db->query("SELECT * FROM tbl_soal_objektif WHERE soal_id='$id' LIMIT 1");
+        return $query;
+    }
+
+    public function cekesay_byid($id)
+    {
+        $query=$this->db->query("SELECT * FROM tbl_soal_esay WHERE quiz_id='$id' LIMIT 1");
         return $query;
     }
 
@@ -56,5 +73,14 @@ class Quiz_model extends CI_Model
         return $result;
     }
 
+    public function tambah_esay($id,$soal){
+        $result = $this->db->query("INSERT INTO tbl_soal_esay(quiz_id, soal_pdf) VALUES ('$id','$soal')");
+        return $result;
+    }
+
+    public function update_esay($id,$soal){
+        $result = $this->db->query("UPDATE tbl_soal_esay SET soal_pdf='$soal' WHERE quiz_id='$id'");
+        return $result;
+    }
 
 }

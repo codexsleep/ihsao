@@ -67,6 +67,12 @@
                     </ul>
                 </div>
           </li>
+          <li class="side-nav-item">
+                <a href="<?= base_url();?>admin/upload" class="side-nav-link">
+                    <i class="mdi mdi-cloud"></i>
+                        <span> CloudFile </span>
+               </a>
+            </li>
           <?php if($userdata['admin_role']=="superadmin"){?>
             <li class="side-nav-item">
                 <a href="#<?= base_url();?>admin/nilai" class="side-nav-link">

@@ -16,7 +16,6 @@ class Peserta extends CI_Controller{
 	function index(){
 		$data['userdata'] = $this->auth_model->admin_data($this->session->userdata('username'))->row_array();
 		$data['peserta'] = $this->peserta_model->datapeserta()->result_array();
-		$data['peserta'] = $this->peserta_model->pesertabyid($id)->row_array();
         $this->load->view('admin/daftar_peserta',$data);
         $this->load->helper('text');
     }
@@ -27,7 +26,14 @@ class Peserta extends CI_Controller{
 			$nama = str_replace("'", "", htmlspecialchars($this->input->post('nama',TRUE),ENT_QUOTES));
 			$email = str_replace("'", "", htmlspecialchars($this->input->post('email',TRUE),ENT_QUOTES));
 			$nis = str_replace("'", "", htmlspecialchars($this->input->post('nis',TRUE),ENT_QUOTES));
-				$created = date('Y-m-d H:i:s');
+			$created = date('Y-m-d H:i:s');
+			$cekmail = $this->peserta_model->pesertabymail($email)->row_array();
+			$ceknis = $this->peserta_model->pesertabynis($nis)->row_array();
+			if($cekmail!=null){
+				setcookie("errmesg", "Email Telah Terdaftar!", time() + (3), "/");
+			}elseif($ceknis!=null){
+				setcookie("errmesg", "NIS Telah Terdaftar!", time() + (3), "/");
+			}else{
 				$result = $this->peserta_model->addpeserta($nama,$email,$nis,$created);
 				if($result){
 					//jika proses tambah berhasil
@@ -36,6 +42,7 @@ class Peserta extends CI_Controller{
 					//jika proses tambah gagal
 					setcookie("errmesg", "Peserta Gagal di tambahkan", time() + (3), "/");
 				}
+			}
 		}
 		redirect("admin/peserta/add"); //dialihkan ke halaman tambah quiz
     }

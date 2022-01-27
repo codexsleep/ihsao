@@ -18,7 +18,17 @@ class Peserta_model extends CI_Model
         return $query;
     }
 
-        public function editpeserta($id,$nama,$email,$nis){
+    public function pesertabymail($email)
+    {
+        $query=$this->db->query("SELECT * FROM tbl_peserta WHERE peserta_email='$email' LIMIT 1");
+        return $query;
+    }
+    public function pesertabynis($nis)
+    {
+        $query=$this->db->query("SELECT * FROM tbl_peserta WHERE peserta_nis='$nis' LIMIT 1");
+        return $query;
+    }
+    public function editpeserta($id,$nama,$email,$nis){
             $result = $this->db->query("UPDATE tbl_peserta SET peserta_name='$nama', peserta_email='$email', peserta_nis='$nis' where peserta_id='$id'");
         return $result;
     }

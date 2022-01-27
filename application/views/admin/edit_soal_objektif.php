@@ -3,7 +3,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Tambah Soal Objektif | Administrator Ihsao</title>
+        <title>Edit Soal | Administrator Ihsao</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -51,10 +51,10 @@
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ihsao</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
                                             <li class="breadcrumb-item"><a href="<?= base_url();?>admin/quiz">Quiz</a></li>
-                                            <li class="breadcrumb-item active">Tambah Soal</li>
+                                            <li class="breadcrumb-item active">Edit Soal</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Tambah Soal</h4>
+                                    <h4 class="page-title">Edit Soal</h4>
                                 </div>
                             </div>
                         </div>
@@ -75,40 +75,62 @@
                                  <div class="card">
                                     <div class="card-body">
                                         <div class="tab-content">
-                                           <form class="needs-validation" method="POST" action="<?= base_url();?>admin/quiz/proses_tambah_soal_objektif/<?= $quizid;?>" novalidate>
+                                           <form class="needs-validation" method="POST" action="<?= base_url();?>admin/quiz/proses_edit_soal_objektif/<?= $quiz;?>/<?= $soal;?>" novalidate>
                                                     <div class="mb-3">
                                                         <label class="form-label">Pertanyaan</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="pertanyaan" hight="150px"></textarea required>
+                                                         <textarea class="ckeditor" id="ckeditor" name="pertanyaan" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_question']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Opsi A</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="opsia" hight="150px"></textarea required>
+                                                         <textarea class="ckeditor" id="ckeditor" name="opsia" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_option_a']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Opsi B</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="opsib" hight="150px"></textarea required>
+                                                         <textarea class="ckeditor" id="ckeditor" name="opsib" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_option_b']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Opsi C</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="opsic" hight="150px"></textarea required>
+                                                         <textarea class="ckeditor" id="ckeditor" name="opsic" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_option_c']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Opsi D</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="opsid" hight="150px"></textarea>
+                                                         <textarea class="ckeditor" id="ckeditor" name="opsid" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_option_d']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Opsi E</label>
-                                                         <textarea class="ckeditor" id="ckeditor" name="opsie" hight="150px"></textarea required>
+                                                         <textarea class="ckeditor" id="ckeditor" name="opsie" hight="150px" required><?= htmlspecialchars_decode($datasoal['quiz_option_e']);?></textarea>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Jawaban</label>
                                                         <select class="form-control" name="jawaban" required>
-                                                            <option value=""></option>
+                                                            <?php 
+                                                            if($datasoal['quiz_answare']=="A" OR $datasoal['quiz_answare']=="B" OR $datasoal['quiz_answare']=="C" OR $datasoal['quiz_answare']=="D" OR $datasoal['quiz_answare']=="E"){
+                                                            ?>
+                                                            <option value="<?= $datasoal['quiz_answare'];?>"><?= $datasoal['quiz_answare'];?></option>
+                                                            <?php
+                                                                }
+                                                            ?>
+                                                            <?php 
+                                                                if($datasoal['quiz_answare']!="A"){
+                                                            ?>
                                                             <option value="A">A</option>
+                                                            <?php } 
+                                                                if($datasoal['quiz_answare']!="B"){
+                                                            ?>
                                                             <option value="B">B</option>
+                                                            <?php } 
+                                                                if($datasoal['quiz_answare']!="C"){
+                                                            ?>
                                                             <option value="C">C</option>
+                                                            <?php } 
+                                                                if($datasoal['quiz_answare']!="D"){
+                                                            ?>
                                                             <option value="D">D</option>
+                                                            <?php } 
+                                                                if($datasoal['quiz_answare']!="E"){
+                                                            ?>
                                                             <option value="E">E</option>
+                                                            <?php } ?>
                                                         </select>
                                                     </div>
                                                 <button class="btn btn-primary" name="simpan" type="submit">Simpan</button>

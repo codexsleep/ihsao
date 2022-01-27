@@ -83,6 +83,13 @@
     										<tbody>
                                                 <?php
                                                     foreach ($quiz as $quiz) {
+
+                                                    if($quiz['quiz_type']=="Objektif"){ 
+                                                            $jumlah = $this->quiz_model->jumlah_soal_objektif($quiz['quiz_id'])->row_array(); 
+                                                            $jumsoal = $jumlah['total'];
+                                                        }elseif($quiz['quiz_type']=="Esay"){ 
+                                                            $jumsoal = "-";
+                                                        }
                                                 ?>
         										<tr>
                                     	            <td><?= $quiz['quiz_id'];?></td>
@@ -91,9 +98,20 @@
                                       	          	<td><?= $quiz['quiz_time'];?>M</td>
                                      	           	<td><?= $quiz['quiz_start'];?> - <?= $quiz['quiz_end'];?></td>
                                       	          	<td><?= $quiz['quiz_token'];?></td>
-                                                    <td>330</td>
+                                                    <td><?= $jumsoal;?></td>
                                                     <td>
+
+                                                        <?php
+                                                            if($quiz['quiz_type']=="Objektif"){
+                                                        ?>
                                                         <a href="<?= base_url();?>admin/quiz/soal_objektif/<?= $quiz['quiz_id'];?>"><button type="button" class="btn btn-success"><i class="mdi mdi-format-list-bulleted-square"></i> </button></a>
+                                                        <?php
+                                                            }elseif($quiz['quiz_type']=="Esay"){
+                                                        ?>
+                                                        <a href="<?= base_url();?>admin/quiz/soal_esay/<?= $quiz['quiz_id'];?>"><button type="button" class="btn btn-success"><i class="mdi mdi-file-document-outline"></i> </button></a>
+                                                        <?php
+                                                            }
+                                                        ?>
                                                         <a href="<?= base_url();?>admin/quiz/edit/<?= $quiz['quiz_id'];?>"><button type="button" class="btn btn-warning"><i class="mdi mdi-pencil"></i> </button></a>
                                                         <a href="<?= base_url();?>admin/quiz/delete/<?= $quiz['quiz_id'];?>"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></td>
                                             	</tr>

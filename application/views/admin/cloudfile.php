@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Daftar Soal Objektif | Ihsao</title>
+        <title>Cloudfile | Administrator Ihsao</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -19,7 +19,7 @@
         <link href="<?= base_url();?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url();?>assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
         <link href="<?= base_url();?>assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
-
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     </head>
 
     <body class="loading" data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -44,16 +44,14 @@
                                         <ol class="breadcrumb m-0">
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Ihsao</a></li>
                                             <li class="breadcrumb-item"><a href="javascript: void(0);">Admin</a></li>
-                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Quiz</a></li>
-                                            <li class="breadcrumb-item active">Soal</li>
+                                            <li class="breadcrumb-item active">Cloudfile</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Daftar Soal Objektif</h4>
+                                    <h4 class="page-title">CloudFile</h4>
                                 </div>
                             </div>
                         </div>
-                        <!-- end page title --> 
-                         <?php if(isset($_COOKIE['errmesg'])){ ?>
+                            <?php if(isset($_COOKIE['errmesg'])){ ?>
                         <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             <strong>Error - </strong> <?= $_COOKIE['errmesg'];?>
@@ -64,7 +62,23 @@
                             <strong>Success - </strong> <?= $_COOKIE['sucmesg'];?>
                         </div>
                         <?php }?>
-                         <a href="<?= base_url();?>admin/quiz/tambah_soal_objektif/<?= $quizid;?>"><button type="button" class="btn btn-secondary" style="margin-bottom: 10px;">Tambah Soal</button></a>
+                        <div class="row">
+                             <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                    <form method="POST" action="<?= base_url();?>admin/upload/cloudfile" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                                <input type="file" id="example-fileinput" class="form-control" name="file">
+                                        </div>
+                                        <div class="mb-3">
+                                                <button type="submit" class="btn btn-primary" name="simpan">Simpan</button>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title --> 
                         <div class="row">
                         	 <div class="col-12">
                                 <div class="card">
@@ -73,20 +87,27 @@
     										<thead>
                                                 <tr>
                                                 	<th>ID</th>
-                                                	<th>Soal</th>
+                                                	<th>Url</th>
+                                                	<th>Type</th>
+                                                	<th>Size</th>
+                                                    <th>Created Date</th>
                                                     <th>Action</th>
         										</tr>
     										</thead>
     										<tbody>
                                                 <?php
-                                                    foreach ($soal as $soal) {
+                                                    foreach ($datafile as $cloudfile) {
                                                 ?>
         										<tr>
-                                    	            <td><?= $soal['soal_id'];?></td>
-                                     	           	<td><a href="<?= base_url();?>admin/quiz/lihat_soal_objektif/<?= $soal['soal_id'];?>" target="_blank"><button type="button" class="btn btn-success"><i class="mdi mdi-eye"></i> Lihat Soal</button></a></td>
-                                                        <td>
-                                                        <a href="<?= base_url();?>admin/quiz/edit_soal_objektif/<?= $soal['quiz_id'];?>/<?= $soal['soal_id'];?>"><button type="button" class="btn btn-warning"><i class="mdi mdi-pencil"></i> </button></a>
-                                                        <a href="<?= base_url();?>admin/quiz/delete_soal_objektif/<?= $quizid;?>/<?= $soal['soal_id'];?>"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></td>
+                                    	            <td><?= $cloudfile['file_id'];?></td>
+                                    	            <td><?= base_url();?>uploads/<?= $cloudfile['file_name'];?></td>
+                                     	           	<td><?= $cloudfile['file_ext'];?></td>
+                                      	          	<td><?= $cloudfile['file_size'];?>KB</td>
+                                                    <td><?= $cloudfile['created_date'];?></td>
+                                                    <td>
+                                                        <a href="<?= base_url();?>uploads/<?= $cloudfile['file_name'];?>" target="_blank"><button type="button" class="btn btn-info"><i class="mdi mdi-eye"></i> </button></a>
+                                                        <a href="<?= base_url();?>admin/upload/delete/<?= $cloudfile['file_id'];?>"><button type="button" class="btn btn-danger"><i class="mdi mdi-trash-can"></i> </button></a>
+                                                    </td>
                                             	</tr>
                                             <?php } ?>
     										</tbody>
