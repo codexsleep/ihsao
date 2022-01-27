@@ -55,9 +55,9 @@ class Quiz extends CI_Controller{
 			}	
 		}
 		redirect("admin/quiz/add"); //dialihkan ke halaman tambah quiz
-    }
+    } 
 
-      function edit_pppprocess($id){
+      function edit_process($id){
     	//mengecek tombol simpan di jalankan atau tidak
 		if(isset($_POST['simpan'])){
 			$nama = str_replace("'", "", htmlspecialchars($this->input->post('nama',TRUE),ENT_QUOTES));
@@ -82,12 +82,13 @@ class Quiz extends CI_Controller{
 					setcookie("errmesg", "Data tidak boleh kosong", time() + (3), "/");
 			}	
 		}
-		redirect("admin/quiz/edit/",$id); //dialihkan ke halaman tambah quiz
+		redirect("admin/quiz/edit/".$id); //dialihkan ke halaman tambah quiz
     }
 
     function edit($id){
 		$data['userdata'] = $this->auth_model->admin_data($this->session->userdata('username'))->row_array();
 		$data['quiz'] = $this->quiz_model->dataquiz_edit($id)->row_array();
+		$data['id'] = $id;
         $this->load->view('admin/edit_quiz',$data);
         $this->load->helper('text');
     }

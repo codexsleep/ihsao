@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <title>Edit Quiz Administrator | Ihsao</title>
+        <title>Edit Quiz | Administrator Ihsao</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -15,7 +15,7 @@
         <link href="<?= base_url();?>assets/css/vendor/buttons.bootstrap5.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url();?>assets/css/vendor/select.bootstrap5.css" rel="stylesheet" type="text/css" />
 
-        <!-- App css -->
+        <!-- App css --> 
         <link href="<?= base_url();?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="<?= base_url();?>assets/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
         <link href="<?= base_url();?>assets/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
@@ -69,7 +69,7 @@
                                  <div class="card">
                                     <div class="card-body">
                                         <div class="tab-content">
-                                                <form class="needs-validation" method="POST" action="<?= base_url();?>admin/quiz/edit_process" novalidate>
+                                                <form class="needs-validation" method="POST" action="<?= base_url();?>admin/quiz/edit_process/<?= $id;?>" novalidate>
                                                     <div class="mb-3">
                                                         <label class="form-label">Nama</label>
                                                         <input type="text" class="form-control" name="nama" placeholder="Masukkan nama quiz" value="<?= $quiz['quiz_name'];?>" required>

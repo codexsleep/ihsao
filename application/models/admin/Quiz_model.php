@@ -41,8 +41,8 @@ class Quiz_model extends CI_Model
         return $query;
     }
 
-    public function editquiz(){
-        $result = $this->db->query("UPDATE tbl_quiz SET quiz_name='',quiz_type='',quiz_start='',quiz_end='',quiz_time='' WHERE quiz_id=''");
+    public function editquiz($id,$nama,$jenis,$waktu,$start,$end){
+        $result = $this->db->query("UPDATE tbl_quiz SET quiz_name='$nama',quiz_type='$jenis',quiz_start='$start',quiz_end='$end',quiz_time='$waktu' WHERE quiz_id='$id'");
         return $result;
     }
 
