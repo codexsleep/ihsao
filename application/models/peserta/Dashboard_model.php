@@ -54,7 +54,7 @@ class Dashboard_model extends CI_Model{
     }
 
     public function set_start_datetime($quiz_log_id,$start_date){
-            $result = $this->db->query("UPDATE tbl_log_quiz_peserta SET start_time='$start_date' WHERE quiz_log_id='$quiz_log_id'");
+            $result = $this->db->query("UPDATE tbl_log_quiz_peserta SET quiz_status='In-progress', start_time='$start_date' WHERE quiz_log_id='$quiz_log_id'");
             return $result;
     }
 

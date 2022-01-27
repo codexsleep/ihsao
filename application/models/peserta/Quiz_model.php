@@ -4,7 +4,7 @@ class quiz_model extends CI_Model{
     public function log_soal($soal_log_id){ //mengambil data dari log soal berdasarkan id log soal dan log quiz
         $result = $this->db->query("SELECT * FROM tbl_log_soal_objektif_peserta where soal_log_id='$soal_log_id'");
         return $result;
-    }
+    } 
 
     public function datasoal_objektif($soal_id){ //mengambil datasoal objektif berdasarkan id soal dari log soal
         $result = $this->db->query("SELECT * FROM tbl_soal_objektif where soal_id='$soal_id'");
@@ -41,4 +41,8 @@ class quiz_model extends CI_Model{
             return $result;
     }
 
+    public function finish_quiz($quiz_log_id,$finishtime){
+            $result = $this->db->query("UPDATE tbl_log_quiz_peserta SET quiz_status='Selesai', finish_time='$finishtime' WHERE quiz_log_id='$quiz_log_id'");
+            return $result;
+    }
 }

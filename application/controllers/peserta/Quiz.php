@@ -21,7 +21,7 @@ class Quiz extends CI_Controller{
     }
 
 
-    function objektif($log_id,$soal_log_id){            
+    function objektif($log_id,$soal_log_id){             
     	$data['userdata'] = $this->auth_model->peserta_data($this->session->userdata('email'))->row_array();
         $log = $this->quiz_model->log_soal($soal_log_id)->row_array(); //mengambil data log soal
         $data['log_soal'] = $this->quiz_model->log_soal($soal_log_id)->row_array(); //mengambil data log soal
@@ -30,6 +30,10 @@ class Quiz extends CI_Controller{
         $data['log_quiz'] = $this->quiz_model->log_quiz($log['quiz_log_id'])->row_array(); //mengambil data log quiz
         $answare_soal = $this->quiz_model->total_unansware_soal($log_id)->row_array(); //mengambil data log soal
         $last_soal = $this->quiz_model->min_log_soal($log_id)->row_array(); //mengambil data log soal
+        $cekfinish = $this->quiz_model->log_quiz($log['quiz_log_id'])->row_array();
+        if($cekfinish['status']=='Selesai' or $cekfinish['status']=='Ditutup'){ //mengecek apakah quiz sudah finish atau ditutup
+            redirect("peserta/beranda");
+        }
         $data['log_id'] = $log_id; //log id quiz
         //menyimpan nomor soal dalam array start
         $soalproses_nav = $this->quiz_model->log_soal_nav($log_id)->result_array();
@@ -76,6 +80,10 @@ class Quiz extends CI_Controller{
                     $destination = $soalnumber[$currentnumber-1];
                 }elseif($nav=="Next"){
                     $destination = $soalnumber[$currentnumber+1];
+                }elseif($nav=="Finish"){
+                    $finishtime = date('Y-m-d H:i:s');
+                    $finishquiz = $this->quiz_model->finish_quiz($log_id,$finishtime);
+                    redirect("peserta/beranda");
                 }
             }
             redirect("peserta/quiz/objektif/".$log_id."/".$destination);

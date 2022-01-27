@@ -6,7 +6,7 @@
  $akhir  = strtotime($end_time);
  $diff  = $akhir - $awal;
  $menit  = $diff/60;
-
+ 
  //algoritma checked
 if($log_soal['jawaban']=="A"){
     $checkA = "checked";

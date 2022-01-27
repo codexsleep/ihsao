@@ -107,6 +107,8 @@
                                                         //mengecek apakah waktu quiz tersedia untuk dikerjakan
                                                         if($sekarang>=$awal && $sekarang<$akhir){
                                                             $current_status = $quiz['quiz_status'];
+                                                        }elseif($quiz['quiz_status']=="Selesai"){
+                                                            $current_status = "Selesai";
                                                         }else{
                                                             $current_status = "Ditutup";
                                                         }
@@ -145,7 +147,7 @@
                                                             <h5 class="font-14 mt-1 fw-normal"><?= $quizdata['quiz_time'];?>m</h5>
                                                         </td>
                                                         <td class="table-action" style="width: 90px;">
-                                                            <a href="<?= base_url();?>peserta/beranda/start_objektif_quiz/<?= $quiz['quiz_log_id'];?>" <?php if($current_status=="Ditutup"){ echo 'onclick="return false;"';}?>><button type="button" class="btn btn-<?php if($current_status=="Ditutup"){ echo "light";}else{ echo "info";}?>" <?php if($current_status=="Ditutup"){ echo "disabled";}?>> Mulai</button></a>
+                                                            <a href="<?= base_url();?>peserta/beranda/start_objektif_quiz/<?= $quiz['quiz_log_id'];?>" <?php if($current_status=="Ditutup" or $current_status=="Selesai"){ echo 'onclick="return false;"';}?>><button type="button" class="btn btn-info" <?php if($current_status=="Ditutup" or $current_status=="Selesai"){ echo "disabled";}?>> Mulai</button></a>
                                                         </td>
                                                     </tr>
                                                      <?php

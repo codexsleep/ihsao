@@ -46,7 +46,7 @@ class Beranda extends CI_Controller{
     				}else{
     					setcookie("errmesg", "Tidak Bisa ditambahkan, quiz kadaluarsa!", time() + (3), "/");
     				}
-    			}else{
+    			}else{ 
     				setcookie("errmesg", "Quiz sudah terdaftar!", time() + (3), "/");
     			}
     		}else{
@@ -68,6 +68,7 @@ class Beranda extends CI_Controller{
         $cek_quiz_log = $this->dashboard_model->cek_quiz_log($quiz_log_id)->row_array(); //data log start quiz
         $start_datetime = date('Y-m-d H:i:s'); //waktu start quiz
         $soal_log = $this->quiz_model->min_log_soal($quiz_log_id)->row_array(); //mengambil data log soal
+        $no_soal = $this->quiz_model->log_soal_nav($quiz_log_id)->row_array(); //mengambil data log soal
         if($cek_quiz_log==null){
              $showquiz = $this->dashboard_model->show_soal_objektif($quiz_id)->result_array();
                 foreach ($showquiz as $quiz) {
@@ -86,25 +87,16 @@ class Beranda extends CI_Controller{
                 redirect("peserta/beranda");
             }
         }else{
-                redirect("peserta/quiz/objektif/".$quiz_log_id."/".$soal_log['soal_log_id']);
+                if($soal_log['soal_log_id']!=null){
+                     $destination = $soal_log['soal_log_id'];
+                }else{
+
+                    $destination = $no_soal['soal_log_id'];
+            }
+                redirect("peserta/quiz/objektif/".$quiz_log_id."/".$destination);
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
